@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.lambdaschool</groupId>
-    <artifactId>authenticatedusers</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>authenticatedusers</name>
-    <description>Demo project for Spring Boot</description>
+    <artifactId>tipsease</artifactId>
+    <version>0.0.1</version>
+    <name>tipsease</name>
+    <description>tipsease project for build week at lambdaschool</description>
 
     <properties>
         <java.version>11</java.version>
@@ -136,7 +136,7 @@
 
     <build>
 <!--        <finalName>${project.artifactId}</finalName>-->
-        <finalName>jrmmba-starthere</finalName>
+        <finalName>jtonna-tipsease-backend</finalName>
 
         <plugins>
             <plugin>
@@ -150,18 +150,20 @@
                 <groupId>com.heroku.sdk</groupId>
                 <artifactId>heroku-maven-plugin</artifactId>
                 <version>2.0.3</version>
+
                 <configuration>
-                    <appName>jrmmba-starthere</appName>
+                    <appName>jtonna-tipsease-backend</appName>
                     <includeTarget>false</includeTarget>
                     <includes>
-                        <!--   For windows      <include>${project.build.directory}\${project.build.finalName}.jar</include>-->
-                        <include>${project.build.directory}/${project.build.finalName}.jar</include>
+                        <include>${project.build.directory}\${project.build.finalName}.jar</include>
+                        <!--  For Mac  <include>${project.build.directory}/${project.build.finalName}.jar</include>-->
                     </includes>
                     <jdkVersion>${java.version}</jdkVersion>
                     <processTypes>
                         <web>java $JAVA_OPTS -Dserver.port=$PORT -jar target/${project.build.finalName}.jar</web>
                     </processTypes>
                 </configuration>
+
             </plugin>
 
         </plugins>
