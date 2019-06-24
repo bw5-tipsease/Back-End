@@ -1,7 +1,6 @@
 package com.lambdaschool.tipsease.services;
 
 import com.lambdaschool.tipsease.exceptions.ResourceNotFoundException;
-import com.lambdaschool.tipsease.models.Quote;
 import com.lambdaschool.tipsease.models.User;
 import com.lambdaschool.tipsease.models.UserRoles;
 import com.lambdaschool.tipsease.repository.RoleRepository;
@@ -79,11 +78,6 @@ public class UserServiceImpl implements UserDetailsService, UserService
         }
         newUser.setUserRoles(newRoles);
 
-        for (Quote q : user.getQuotes())
-        {
-            newUser.getQuotes().add(new Quote(q.getQuote(), newUser));
-        }
-
         return userrepos.save(newUser);
     }
 
@@ -120,14 +114,6 @@ public class UserServiceImpl implements UserDetailsService, UserService
                     for (UserRoles ur : user.getUserRoles())
                     {
                         rolerepos.insertUserRoles(id, ur.getRole().getRoleid());
-                    }
-                }
-
-                if (user.getQuotes().size() > 0)
-                {
-                    for (Quote q : user.getQuotes())
-                    {
-                        currentUser.getQuotes().add(new Quote(q.getQuote(), currentUser));
                     }
                 }
 

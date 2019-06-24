@@ -29,8 +29,7 @@ public class UserController
     private UserService userService;
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @GetMapping(value = "/users",
-                produces = {"application/json"})
+    @GetMapping(value = "/users", produces = {"application/json"})
     public ResponseEntity<?> listAllUsers(HttpServletRequest request)
     {
         logger.trace(request.getRequestURI() + " accessed");
@@ -41,11 +40,8 @@ public class UserController
 
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @GetMapping(value = "/user/{userId}",
-                produces = {"application/json"})
-    public ResponseEntity<?> getUser(HttpServletRequest request,
-                                     @PathVariable
-                                             Long userId)
+    @GetMapping(value = "/user/{userId}", produces = {"application/json"})
+    public ResponseEntity<?> getUser(HttpServletRequest request, @PathVariable Long userId)
     {
         logger.trace(request.getRequestURI() + " accessed");
 
@@ -54,8 +50,7 @@ public class UserController
     }
 
 
-    @GetMapping(value = "/getusername",
-                produces = {"application/json"})
+    @GetMapping(value = "/getusername", produces = {"application/json"})
     @ResponseBody
     public ResponseEntity<?> getCurrentUserName(HttpServletRequest request, Authentication authentication)
     {
@@ -66,9 +61,7 @@ public class UserController
 
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    @PostMapping(value = "/user",
-                 consumes = {"application/json"},
-                 produces = {"application/json"})
+    @PostMapping(value = "/user", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<?> addNewUser(HttpServletRequest request, @Valid
     @RequestBody
             User newuser) throws URISyntaxException
@@ -87,11 +80,7 @@ public class UserController
 
 
     @PutMapping(value = "/user/{id}")
-    public ResponseEntity<?> updateUser(HttpServletRequest request,
-                                        @RequestBody
-                                                User updateUser,
-                                        @PathVariable
-                                                long id)
+    public ResponseEntity<?> updateUser(HttpServletRequest request, @RequestBody User updateUser, @PathVariable long id)
     {
         logger.trace(request.getRequestURI() + " accessed");
 
@@ -102,9 +91,7 @@ public class UserController
 
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/user/{id}")
-    public ResponseEntity<?> deleteUserById(HttpServletRequest request,
-                                            @PathVariable
-                                                    long id)
+    public ResponseEntity<?> deleteUserById(HttpServletRequest request, @PathVariable long id)
     {
         logger.trace(request.getRequestURI() + " accessed");
 
