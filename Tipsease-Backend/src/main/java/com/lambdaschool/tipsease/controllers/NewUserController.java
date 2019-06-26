@@ -22,9 +22,9 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 @RestController
-public class OpenController
+public class NewUserController
 {
-    private static final Logger logger = LoggerFactory.getLogger(RolesController.class);
+    private static final Logger logger = LoggerFactory.getLogger(NewUserController.class);
 
     @Autowired
     private UserService userService;
@@ -33,9 +33,7 @@ public class OpenController
     private RoleService roleService;
 
     @PostMapping(value = "/createnewuser", consumes = {"application/json"}, produces = {"application/json"})
-    public ResponseEntity<?> addNewUser(HttpServletRequest request, @Valid
-    @RequestBody
-            User newuser) throws URISyntaxException
+    public ResponseEntity<?> addNewUser(HttpServletRequest request, @Valid @RequestBody User newuser) throws URISyntaxException
     {
         logger.trace(request.getRequestURI() + " accessed");
 
@@ -47,9 +45,8 @@ public class OpenController
 
         // set the location header for the newly created resource - to another controller!
         HttpHeaders responseHeaders = new HttpHeaders();
-        URI newRestaurantURI = ServletUriComponentsBuilder.fromUriString(request.getServerName() + ":" + request.getLocalPort() + "/users/user/{userId}").buildAndExpand(newuser.getUserid()).toUri();
-        responseHeaders.setLocation(newRestaurantURI);
-
+        URI newUserURI = ServletUriComponentsBuilder.fromUriString(request.getServerName() + ":" + request.getLocalPort() + "/users/user/{userId}").buildAndExpand(newuser.getUserid()).toUri();
+        responseHeaders.setLocation(newUserURI);
 
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }

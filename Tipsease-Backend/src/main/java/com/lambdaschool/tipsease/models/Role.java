@@ -14,12 +14,10 @@ public class Role extends Auditable
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long roleid;
 
-    @Column(nullable = false,
-            unique = true)
+    @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "role",
-               cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("role")
     private List<UserRoles> userRoles = new ArrayList<>();
 

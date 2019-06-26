@@ -18,17 +18,29 @@ public class User extends Auditable
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long userid;
+    // 1
+    // 2
 
-    @Column(nullable = false,
-            unique = true)
+    @Column(nullable = false, unique = true)
     private String username;
+    // @Jtonna
+    // @Alex
 
     @Column(nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
+    // password123
+    // superSecurePassword
 
-    @OneToMany(mappedBy = "user",
-               cascade = CascadeType.ALL)
+    @Column(nullable = true)
+    private String firstname, lastname;
+    // Jacob, Tonna
+    // Alex, Shipplet
+    // should get returned as a getName where fname + lname = name
+
+    private String name = firstname + lastname;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("user")
     private List<UserRoles> userRoles = new ArrayList<>();
 

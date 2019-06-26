@@ -20,15 +20,15 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
+@PreAuthorize("hasAuthority('ROLE_USER')")
 @RequestMapping("/users")
 public class UserController
 {
-    private static final Logger logger = LoggerFactory.getLogger(RolesController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private UserService userService;
 
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = "/users", produces = {"application/json"})
     public ResponseEntity<?> listAllUsers(HttpServletRequest request)
     {
@@ -38,8 +38,6 @@ public class UserController
         return new ResponseEntity<>(myUsers, HttpStatus.OK);
     }
 
-
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @GetMapping(value = "/user/{userId}", produces = {"application/json"})
     public ResponseEntity<?> getUser(HttpServletRequest request, @PathVariable Long userId)
     {
@@ -48,7 +46,6 @@ public class UserController
         User u = userService.findUserById(userId);
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
-
 
     @GetMapping(value = "/getusername", produces = {"application/json"})
     @ResponseBody
@@ -59,8 +56,6 @@ public class UserController
         return new ResponseEntity<>(authentication.getPrincipal(), HttpStatus.OK);
     }
 
-
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @PostMapping(value = "/user", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<?> addNewUser(HttpServletRequest request, @Valid
     @RequestBody
@@ -78,7 +73,6 @@ public class UserController
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }
 
-
     @PutMapping(value = "/user/{id}")
     public ResponseEntity<?> updateUser(HttpServletRequest request, @RequestBody User updateUser, @PathVariable long id)
     {
@@ -88,8 +82,6 @@ public class UserController
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-
-    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     @DeleteMapping("/user/{id}")
     public ResponseEntity<?> deleteUserById(HttpServletRequest request, @PathVariable long id)
     {

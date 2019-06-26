@@ -21,7 +21,8 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
         // http.anonymous().disable();
-        http.authorizeRequests().antMatchers("/", "/h2-console/**", "/swagger-resources/**", "/swagger-resources/configuration/ui", "/swagger-resources/configuration/security", "/swagger-resource/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/createnewuser")
+        http.authorizeRequests()
+                .antMatchers("/", "/h2-console/**", "/swagger-resources/**", "/swagger-resources/configuration/ui", "/swagger-resources/configuration/security", "/swagger-resource/**", "/swagger-ui.html", "/v2/api-docs", "/webjars/**", "/createnewuser")
                 .permitAll().
                 antMatchers("/users/**", "/oauth/revoke-token").authenticated().
                 antMatchers("/roles/**").hasAnyRole("ADMIN", "USER").
