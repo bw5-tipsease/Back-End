@@ -29,6 +29,7 @@ public class RolesController {
     @Autowired
     RoleService roleService;
 
+    // gets roles
     @GetMapping(value = "/roles", produces = {"application/json"})
     public ResponseEntity<?> listRoles(HttpServletRequest request)
     {
@@ -38,7 +39,7 @@ public class RolesController {
         return new ResponseEntity<>(allRoles, HttpStatus.OK);
     }
 
-
+    // gets roles by roleid
     @GetMapping(value = "/role/{roleId}", produces = {"application/json"})
     public ResponseEntity<?> getRole(HttpServletRequest request, @PathVariable Long roleId)
     {
@@ -48,7 +49,7 @@ public class RolesController {
         return new ResponseEntity<>(r, HttpStatus.OK);
     }
 
-
+    // used to set a role
     @PostMapping(value = "/role")
     public ResponseEntity<?> addNewRole(HttpServletRequest request, @Valid @RequestBody Role newRole) throws URISyntaxException
     {
@@ -66,6 +67,7 @@ public class RolesController {
 
 //    @PostMapping(value = "/user/{userid}/role/{roleid}")
 
+    // deletes a role
     @DeleteMapping("/role/{id}")
     public ResponseEntity<?> deleteRoleById(HttpServletRequest request, @PathVariable long id)
     {

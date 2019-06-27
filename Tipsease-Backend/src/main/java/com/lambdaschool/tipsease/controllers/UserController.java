@@ -4,10 +4,12 @@ import com.lambdaschool.tipsease.models.User;
 import com.lambdaschool.tipsease.services.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.DeprecatedConfigurationProperty;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -75,7 +77,8 @@ public class UserController
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "Gets the current username of the signed in user. Probably irrelevant and not useful. To be removed later", tags = "soon to be decapitated")
+    @Deprecated
+    @ApiOperation(value = "Gets the current username of the signed in user.")
     @GetMapping(value = "/getusername", produces = {"application/json"})
     @ResponseBody
     public ResponseEntity<?> getCurrentUserName(HttpServletRequest request, Authentication authentication)
@@ -85,7 +88,8 @@ public class UserController
         return new ResponseEntity<>(authentication.getPrincipal(), HttpStatus.OK);
     }
 
-    @ApiOperation(value = "this was supposed to be used to add a new user", tags = "soon to be decapitated")
+    @Deprecated
+    @ApiOperation(value = "this was supposed to be used to add a new user")
     @PostMapping(value = "/user", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<?> addNewUser(HttpServletRequest request, @Valid @RequestBody User newuser) throws URISyntaxException
     {
@@ -101,7 +105,8 @@ public class UserController
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }
 
-    @ApiOperation(value = "This is used to delete a user by their id.", tags = "soon to be decapitated")
+    @Deprecated
+    @ApiOperation(value = "This is used to delete a user by their id.")
     @DeleteMapping("/user/{id}")
     public ResponseEntity<?> deleteUserById(HttpServletRequest request, @PathVariable long id)
     {
