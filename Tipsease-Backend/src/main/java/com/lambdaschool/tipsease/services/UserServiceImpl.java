@@ -29,45 +29,19 @@ public class UserServiceImpl implements UserDetailsService, UserService
     private RoleRepository rolerepos;
 
     @Transactional
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
-    {
-        User user = userrepos.findByUsername(username);
-        if (user == null)
-        {
-            throw new UsernameNotFoundException("Invalid username or password.");
-        }
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthority());
-    }
-
-    public User findUserById(long id) throws ResourceNotFoundException
-    {
-        return userrepos.findById(id).orElseThrow(() -> new ResourceNotFoundException(Long.toString(id)));
-    }
-
-    public List<User> findAll()
-    {
-        List<User> list = new ArrayList<>();
-        userrepos.findAll().iterator().forEachRemaining(list::add);
-        return list;
-    }
-
     @Override
-    public void delete(long id)
-    {
-        if (userrepos.findById(id).isPresent())
-        {
-            userrepos.deleteById(id);
-        } else
-        {
-            throw new ResourceNotFoundException(Long.toString(id));
-        }
+    public User findUserData(String username) {
+        User userData = userrepos.findByUsername(username);
+        return userData;
     }
+    // premade code
 
     @Transactional
     @Override
     public User save(User user)
     {
         User newUser = new User();
+        newUser.setName(user.getName());
         newUser.setUsername(user.getUsername());
         newUser.setPasswordNoEncrypt(user.getPassword());
 
@@ -80,7 +54,6 @@ public class UserServiceImpl implements UserDetailsService, UserService
 
         return userrepos.save(newUser);
     }
-
 
     @Transactional
     @Override
@@ -96,6 +69,16 @@ public class UserServiceImpl implements UserDetailsService, UserService
                 if (user.getUsername() != null)
                 {
                     currentUser.setUsername(user.getUsername());
+                }
+
+                if (user.getName() != null)
+                {
+                    currentUser.setName(user.getUsername());
+                }
+
+                if (user.getProfilepicture() != null)
+                {
+                    currentUser.setProfilepicture((user.getProfilepicture()));
                 }
 
                 if (user.getPassword() != null)
@@ -127,5 +110,40 @@ public class UserServiceImpl implements UserDetailsService, UserService
             throw new ResourceNotFoundException(authentication.getName());
         }
 
+    }
+
+    @Override
+    public void delete(long id)
+    {
+        if (userrepos.findById(id).isPresent())
+        {
+            userrepos.deleteById(id);
+        } else
+        {
+            throw new ResourceNotFoundException(Long.toString(id));
+        }
+    }
+
+    @Transactional
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException
+    {
+        User user = userrepos.findByUsername(username);
+        if (user == null)
+        {
+            throw new UsernameNotFoundException("Invalid username or password.");
+        }
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), user.getAuthority());
+    }
+
+    public User findUserById(long id) throws ResourceNotFoundException
+    {
+        return userrepos.findById(id).orElseThrow(() -> new ResourceNotFoundException(Long.toString(id)));
+    }
+
+    public List<User> findAll()
+    {
+        List<User> list = new ArrayList<>();
+        userrepos.findAll().iterator().forEachRemaining(list::add);
+        return list;
     }
 }

@@ -21,24 +21,24 @@ public class User extends Auditable
     // 1
     // 2
 
+    @Column(nullable = false)
+    private String name;
+    // Jacob Tonna
+    // Alex Shipplet
+
     @Column(nullable = false, unique = true)
     private String username;
     // @Jtonna
     // @Alex
+
+    @Column(nullable = true)
+    private String profilepicture = "https://twistedsifter.files.wordpress.com/2012/09/trippy-profile-pic-portrait-head-on-and-from-side-angle.jpg";
 
     @Column(nullable = false)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
     // password123
     // superSecurePassword
-
-    @Column(nullable = true)
-    private String firstname, lastname;
-    // Jacob, Tonna
-    // Alex, Shipplet
-    // should get returned as a getName where fname + lname = name
-
-    private String name = firstname + lastname;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("user")
@@ -48,10 +48,12 @@ public class User extends Auditable
     {
     }
 
-    public User(String username, String password, List<UserRoles> userRoles)
+    public User(String name, String username, String password, String profilepicture, List<UserRoles> userRoles)
     {
+        setName(name);
         setUsername(username);
         setPassword(password);
+        setProfilepicture(profilepicture);
         for (UserRoles ur : userRoles)
         {
             ur.setUser(this);
@@ -67,6 +69,22 @@ public class User extends Auditable
     public void setUserid(long userid)
     {
         this.userid = userid;
+    }
+
+    public String getProfilepicture() {
+        return profilepicture;
+    }
+
+    public void setProfilepicture(String profilepicture) {
+        this.profilepicture = profilepicture;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUsername()

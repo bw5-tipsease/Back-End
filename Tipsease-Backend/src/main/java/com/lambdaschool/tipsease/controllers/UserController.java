@@ -29,6 +29,25 @@ public class UserController
     @Autowired
     private UserService userService;
 
+    @GetMapping(value = "/user/info", produces = {"application/json"})
+    @ResponseBody
+    public ResponseEntity<?> getCurrentUser(Authentication authentication) {
+        User data = userService.findUserData(authentication.getName());
+        return new ResponseEntity<>(data, HttpStatus.OK);
+    }
+
+    // this updates the current user
+    @PutMapping(value = "/user/update/{id}")
+    public ResponseEntity<?> updateUser(HttpServletRequest request, @RequestBody User updateUser, @PathVariable long id)
+    {
+        logger.trace(request.getRequestURI() + " accessed");
+
+        userService.update(updateUser, id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    // johns code
+
     @GetMapping(value = "/users", produces = {"application/json"})
     public ResponseEntity<?> listAllUsers(HttpServletRequest request)
     {
@@ -71,15 +90,6 @@ public class UserController
         responseHeaders.setLocation(newUserURI);
 
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
-    }
-
-    @PutMapping(value = "/user/{id}")
-    public ResponseEntity<?> updateUser(HttpServletRequest request, @RequestBody User updateUser, @PathVariable long id)
-    {
-        logger.trace(request.getRequestURI() + " accessed");
-
-        userService.update(updateUser, id);
-        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/user/{id}")
