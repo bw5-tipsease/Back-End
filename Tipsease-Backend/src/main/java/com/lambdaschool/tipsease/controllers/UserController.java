@@ -2,6 +2,9 @@ package com.lambdaschool.tipsease.controllers;
 
 import com.lambdaschool.tipsease.models.User;
 import com.lambdaschool.tipsease.services.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
+@Api(value = "User%20Actions", produces = "MediaType.APPLICATION_JSON_VALUE", tags = {"User Actions"})
 @RestController
 @PreAuthorize("hasAuthority('ROLE_USER')")
 @RequestMapping("/users")
@@ -29,6 +33,8 @@ public class UserController
     @Autowired
     private UserService userService;
 
+    // this is in charge of updating the current user
+    @ApiOperation(value = "This endpoint is responsible for returning the currently authenticated user's information as one single object.")
     @GetMapping(value = "/user/info", produces = {"application/json"})
     @ResponseBody
     public ResponseEntity<?> getCurrentUser(Authentication authentication) {
@@ -48,6 +54,7 @@ public class UserController
 
     // johns code
 
+    @ApiOperation(value = "this lists all of the users and their associated properties, this should be used for testing & not production.")
     @GetMapping(value = "/users", produces = {"application/json"})
     public ResponseEntity<?> listAllUsers(HttpServletRequest request)
     {
@@ -57,6 +64,8 @@ public class UserController
         return new ResponseEntity<>(myUsers, HttpStatus.OK);
     }
 
+    // returns any user you want by their ID
+    @ApiOperation(value = "This gets the user by user id and returns an object of data relevant to that user. You do NOT need to be signed into the users account you want to get data returned to")
     @GetMapping(value = "/user/{userId}", produces = {"application/json"})
     public ResponseEntity<?> getUser(HttpServletRequest request, @PathVariable Long userId)
     {
@@ -66,6 +75,7 @@ public class UserController
         return new ResponseEntity<>(u, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "Gets the current username of the signed in user. Probably irrelevant and not useful. To be removed later", tags = "soon to be decapitated")
     @GetMapping(value = "/getusername", produces = {"application/json"})
     @ResponseBody
     public ResponseEntity<?> getCurrentUserName(HttpServletRequest request, Authentication authentication)
@@ -75,10 +85,9 @@ public class UserController
         return new ResponseEntity<>(authentication.getPrincipal(), HttpStatus.OK);
     }
 
+    @ApiOperation(value = "this was supposed to be used to add a new user", tags = "soon to be decapitated")
     @PostMapping(value = "/user", consumes = {"application/json"}, produces = {"application/json"})
-    public ResponseEntity<?> addNewUser(HttpServletRequest request, @Valid
-    @RequestBody
-            User newuser) throws URISyntaxException
+    public ResponseEntity<?> addNewUser(HttpServletRequest request, @Valid @RequestBody User newuser) throws URISyntaxException
     {
         logger.trace(request.getRequestURI() + " accessed");
 
@@ -92,6 +101,7 @@ public class UserController
         return new ResponseEntity<>(null, responseHeaders, HttpStatus.CREATED);
     }
 
+    @ApiOperation(value = "This is used to delete a user by their id.", tags = "soon to be decapitated")
     @DeleteMapping("/user/{id}")
     public ResponseEntity<?> deleteUserById(HttpServletRequest request, @PathVariable long id)
     {

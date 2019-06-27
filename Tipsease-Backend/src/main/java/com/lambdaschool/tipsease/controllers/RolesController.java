@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -20,6 +21,7 @@ import java.util.List;
 
 @RestController
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+@ApiIgnore
 @RequestMapping("/roles")
 public class RolesController {
     private static final Logger logger = LoggerFactory.getLogger(RolesController.class);

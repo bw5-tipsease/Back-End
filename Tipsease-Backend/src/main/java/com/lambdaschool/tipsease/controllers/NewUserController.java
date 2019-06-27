@@ -4,6 +4,8 @@ import com.lambdaschool.tipsease.models.User;
 import com.lambdaschool.tipsease.models.UserRoles;
 import com.lambdaschool.tipsease.services.RoleService;
 import com.lambdaschool.tipsease.services.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -21,6 +24,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 
+@Api(value = "Creates%20New%20Account", produces = "MediaType.APPLICATION_JSON_VALUE", tags = {"Creates New Account"})
 @RestController
 public class NewUserController
 {
@@ -32,6 +36,7 @@ public class NewUserController
     @Autowired
     private RoleService roleService;
 
+    @ApiOperation(value = "This endpoint is used to create a new user.")
     @PostMapping(value = "/createnewuser", consumes = {"application/json"}, produces = {"application/json"})
     public ResponseEntity<?> addNewUser(HttpServletRequest request, @Valid @RequestBody User newuser) throws URISyntaxException
     {
