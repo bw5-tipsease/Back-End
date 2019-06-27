@@ -42,7 +42,8 @@ public class UserController
     }
 
     // this updates the current user
-    @PutMapping(value = "/user/update/{id}")
+    @ApiOperation(value = "this can be used to update any values of the currently signed in user.")
+    @PutMapping(value = "/user/update/{id}", consumes = {"application/json"})
     public ResponseEntity<?> updateUser(HttpServletRequest request, @RequestBody User updateUser, @PathVariable long id)
     {
         logger.trace(request.getRequestURI() + " accessed");
@@ -64,7 +65,7 @@ public class UserController
     }
 
     // returns any user you want by their ID
-    @ApiOperation(value = "This gets the user by user id and returns an object of data relevant to that user. You do NOT need to be signed into the users account you want to get data returned to")
+    @ApiOperation( value = "This gets the user by user id and returns an object of data relevant to that user. You do NOT need to be signed into the users account you want to get data returned to")
     @GetMapping(value = "/user/{userId}", produces = {"application/json"})
     public ResponseEntity<?> getUser(HttpServletRequest request, @PathVariable Long userId)
     {
